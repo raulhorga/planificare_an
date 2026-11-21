@@ -1,21 +1,32 @@
-# Notițele noastre · v2
+# Weekend Journal — calendar anual RO / EN
 
-Aplicație mobile-first cu aspect de carnet de notițe. **Lista comună** se deschide implicit; butonul și ecranul Acasă au fost eliminate. Pe desktop există navigare în lateral, iar pe mobil o bară de navigare fixă jos.
+Aplicație web statică, pornind de la aplicația „Notițele noastre” și inspirată de calendarele pe hârtie din fotografiile atașate.
 
-Editorul de notițe permite text liber și autosalvare în foaia de cumpărături / ToDo. Checklist-urile, categoriile, listele Raul și Andreea, camerele casei, istoricul DONE cu dată și oră, traducerea RO/EN și exportul CSV rămân disponibile.
+## Utilizare
 
-## Foi EtherCalc
+Deschide `index.html` dintr-un server web HTTPS (de exemplu GitHub Pages, Netlify sau alt hosting static). Publică **toate** fișierele în același director. Pentru test local se poate rula `python3 -m http.server 8000` în director și apoi accesa `http://localhost:8000`.
 
-- Cumpărături, activități și notițe: https://calc.domainepublic.net/0yku9i1un5nf
-- De avut în casă: https://calc.domainepublic.net/ewi97w9qa7ks
+- 12 luni pe an, navigare în orice an (1900–2200), vedere detaliată și listă cronologică
+- Zilele de weekend evidențiate; clic pe orice zi pentru adăugare
+- Eveniment, loc, tip, planificat/realizat, notițe, editare și ștergere
+- Filtrare, statistici, export CSV, traducere RO/EN, mod luminos/întunecat, interfață mobilă
+- Date locale salvate în browser; sincronizare cu EtherCalc la pornire, după modificări și periodic
 
-## Publicare
+## EtherCalc
 
-Publică `index.html`, `styles.css`, `app.js`, `manifest.webmanifest` și `icon.svg` în același director al unui hosting HTTPS, cum ar fi GitHub Pages. După actualizare, reîncarcă pagina dacă browserul a păstrat fișiere vechi în cache.
+Foaie configurată: https://calc.domainepublic.net/glo9m1jolj7l
 
-**Limitare:** sincronizarea directă depinde de permisiunile CORS ale serverului EtherCalc și de formatul datelor. Codul refuză să suprascrie foi care au o structură necunoscută. Nu a fost efectuat un test live de scriere în foile utilizatorului.
+Antetul CSV utilizat este:
+
+`record_type,id,date,title,place,type,status,notes,updated_at,deleted`
+
+La prima folosire, aplicația poate popula o **foaie goală**. Dacă foaia există și are alt format, aplicația **nu o suprascrie**. Pentru siguranță, exportă periodic un CSV. Importul este realizat prin `PUT /_/glo9m1jolj7l`, iar verificarea prin `GET /_/glo9m1jolj7l/csv`. Suportul CORS și permisiunile de scriere ale serverului pot bloca sincronizarea directă. În această situație, datele rămân în stocarea locală și pot fi exportate CSV.
+
+**Important:** EtherCalc nu oferă tranzacții atomice pentru rescrierea întregului CSV. Evită editările simultane pe mai multe dispozitive; acestea pot produce conflicte. Ștergerea folosește marcaje `deleted` pentru a evita reaparția după sincronizare. Nu șterge datele browserului înainte să confirmi sincronizarea sau să exporți CSV.
+
+Nu s-a efectuat scriere live în foaia indicată, pentru a nu modifica datele utilizatorului. Starea sincronizării este afișată în partea de sus a aplicației.
 
 
+## Tema Aurora (v3)
 
-## Categorii direct în editorul de notițe
-În **Lista comună**, pune cursorul pe un rând sau selectează textul dorit și apasă **Categorie** pentru a-l transforma într-un titlu **bold și subliniat**. Apasă **Text normal** ca să revii la un paragraf obișnuit. Formatarea și textul sunt salvate automat în același rând EtherCalc ca înainte (coloana `notes`, cu prefixul `HTML_NOTE_V1:`). Notițele vechi sunt compatibile. Dacă editezi manual rândul notiței direct în EtherCalc, păstrează acest prefix și structura HTML pentru a conserva formatarea.
+Design modern cu fundal gradient, accente violet-turcoaz, carduri translucide si mod noapte bleumarin. Functionalitatea si formatul datelor EtherCalc raman neschimbate.
